@@ -1,0 +1,64 @@
+<h1 *ngIf="showHeading">Портфолио</h1>
+
+<ng-container *ngIf="!submitted; else preview">
+	<h2>Личная информация</h2>
+	<form>
+		<div>
+			<label for="name">ФИО</label>
+			<input type="text" id="name" name="name" [(ngModel)]="nm" />
+		</div>
+		<div>
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email" [(ngModel)]="em" />
+		</div>
+		<div>
+			<label>Телефон</label>
+			<input type="tel" id="phone" name="phone" [(ngModel)]="ph" />
+		</div>
+		<div>
+			<label for="address">Адрес</label>
+			<input type="text" id="address" name="address" [(ngModel)]="add" />
+		</div>
+	</form>
+
+	<h2>Образование</h2>
+	<div *ngFor="let q of qualification; let i=index">
+		<h3>Диплом {{i+1}}</h3>
+		<form>
+			<div>
+				<label for="college">Колледж/Университет</label>
+				<input type="text" id="college" name="college" [(ngModel)]="q.col" />
+			</div>
+			<div>
+				<label for="degree">Тип диплома</label>
+				<input type="text" id="degree" name="degree" [(ngModel)]="q.deg" />
+			</div>
+			<div>
+				<label for="year">Год</label>
+				<input type="text" id="year" name="year" [(ngModel)]="q.yr"/>
+			</div>
+		</form>
+	</div>
+	<div class="btn-container">
+		<button type="button" (click)="addQualification()">Добавить образование</button>
+		<button type="submit" (click)="submit()">Отправить</button>
+	</div>
+</ng-container>
+
+<ng-template #preview> 
+	<div class="preview-container">
+		<h1>Предварительный просмотр</h1>
+		<div>
+			<p [ngClass]="{'name': true}">{{nm}}</p>
+			<p>Email: {{em}}</p>
+			<p>Телефон: {{ph}}</p>
+			<p>Адрес: {{add}} </p>
+		</div>
+		<div *ngFor="let q of qualification; let i = index">
+			<h3>Образование {{i+1}}</h3>
+			<p>Университет/колледж: {{q.col}}</p>
+			<p>Диплом: {{q.deg}} {{q.yr}}</p>
+		</div>
+		<button type="button" class="btn-edit" (click)="edit()">Изменить</button>
+	</div>
+</ng-template>
